@@ -1,0 +1,41 @@
+<h2>Song List</h2>
+<%= form_tag(musics_path, method: 'get') do %>
+      <%= text_field_tag(:search, params[:search]) %>
+      <%= submit_tag("Search", artist_name: nil) %>
+<% end %>
+<%= link_to "Add song",new_music_path  %>
+<table class="table table-hover">
+
+  <thead class="thead-dark">
+    <tr>
+      <th>Artist_name</th>
+      <th>Composer</th>
+      <th>Song list</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @musics.each do |song| %>
+    <tr>
+      <td><%= song.artist_name %></td>
+      <td><%= song.composer %></td>
+      <td><%= link_to "Play song",song.song_file %></td>
+      <% if current_user.has_role? :admin %>
+      <td><%= link_to 'Edit', edit_music_path(song) %></td>
+      <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% else %>
+      <% pre_like = song.likes.find { |like| like.user_id == current_user.id} %>
+      <% if pre_like %>
+      <td><%= button_to 'Unlike',  music_like_path(song, pre_like), method: :delete %></td>
+      <% else %>
+      <td><%= button_to 'Like', music_likes_path(song), method: :post %></td>
+      <% end %>
+      <td><%= song.likes.count %> <%= (song.likes.count) == 1 ? 'Like' : 'Likes'%></td>
+      <!-- <td><%#= link_to 'Show', song %></td> -->
+      <% end%>
+   </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', users_path %>
