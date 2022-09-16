@@ -1,0 +1,16 @@
+<h1>Listing Playlist</h1>
+<%= link_to 'New playlist entity', new_playlist_path %>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Options</th>
+    <th colspan="3"></th>
+  </tr>
+ 
+  <% @playlists.each do |entity| %>
+    <tr>
+      <td><%= entity.title %></td>
+      <td><%= link_to 'Show', playlist_path(entity) %></td>
+    </tr>
+  <% end %>
+</table>

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   rolify
   has_many :musics, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :playlist, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
